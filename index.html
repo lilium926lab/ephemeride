@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Éphéméride">
+<meta name="theme-color" content="#EDEDED">
+<title>Éphéméride ― Character Birthday Almanac</title>
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-startup-image" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="splash/splash-1170x2532.png">
+<link rel="apple-touch-startup-image" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="splash/splash-1284x2778.png">
+<link rel="apple-touch-startup-image" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="splash/splash-1179x2556.png">
+<link rel="apple-touch-startup-image" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="splash/splash-1290x2796.png">
+<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="splash/splash-1125x2436.png">
+<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="splash/splash-828x1792.png">
+<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="splash/splash-1242x2688.png">
+<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="splash/splash-750x1334.png">
+<link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="splash/splash-640x1136.png">
+<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="splash/splash-1242x2208.png">
+<link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="splash/splash-1536x2048.png">
+<link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="splash/splash-1668x2388.png">
+<link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="splash/splash-2048x2732.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500;1,600&family=Shippori+Mincho:wght@500;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --base: #EDEDED;
+    --bg: #EDEDED;
+    --bg-grad: radial-gradient(1100px 620px at 12% -12%, #F6ECF0 0%, transparent 58%),
+               radial-gradient(900px 520px at 92% 2%, #E4DEDD 0%, transparent 55%);
+    --surface: #FBFAF9;
+    --surface-2: #F1EDEC;
+    --border: #DCD5D3;
+    --border-strong: #C9C0BC;
+    --text: #4B3C39;
+    --text-dim: #7C6C67;
+    --text-faint: #B3A8A4;
+    --accent: #922951;
+    --accent-deep: #6F1E3D;
+    --accent-soft: #F6ECF0;
+    --gold: #A8985F;
+    --danger: #B0433F;
+    --shadow: 0 6px 18px rgba(146,41,81,.09);
+    --shadow-lg: 0 16px 40px rgba(146,41,81,.14);
+    --radius: 14px;
+    --font-disp: "Cormorant Garamond", serif;
+    --font-min: "Shippori Mincho", serif;
+    --font-ui: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", system-ui, sans-serif;
+  }
+  [data-theme="dark"] {
+    --bg: #191317;
+    --bg-grad: radial-gradient(1100px 620px at 12% -12%, #2a1a24 0%, transparent 58%),
+               radial-gradient(900px 520px at 92% 2%, #1d1a20 0%, transparent 55%);
+    --surface: #221b20;
+    --surface-2: #2a2229;
+    --border: #3a3038;
+    --border-strong: #4c4048;
+    --text: #ece4e6;
+    --text-dim: #a99aa1;
+    --text-faint: #756a71;
+    --accent: #d2789a;
+    --accent-deep: #b1587a;
+    --accent-soft: #3a2029;
+    --gold: #c6b478;
+    --danger: #e2766c;
+    --shadow: 0 6px 18px rgba(0,0,0,.4);
+    --shadow-lg: 0 16px 40px rgba(0,0,0,.6);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg-grad), var(--bg);
+    background-attachment: fixed;
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  .wrap {
+    max-width: 1240px; margin: 0 auto;
+    padding: 0 max(18px, env(safe-area-inset-left)) calc(96px + env(safe-area-inset-bottom));
+  }
+
+  /* ---------- header ---------- */
+  header.top {
+    display: flex; align-items: baseline; gap: 14px;
+    padding: 34px 0 20px; flex-wrap: wrap;
+  }
+  header.top h1 {
+    font-size: 21px; font-weight: 700; margin: 0; letter-spacing: .06em;
+  }
+  header.top .sub { font-size: 12px; color: var(--text-faint); letter-spacing: .04em; }
+  header.top .spacer { flex: 1; }
+
+  /* ---------- buttons ---------- */
+  button, .btn {
+    font: inherit; font-size: 13px; cursor: pointer;
+    border: 1px solid var(--border-strong); background: var(--surface);
+    color: var(--text); padding: 7px 14px; border-radius: 9px;
+    transition: background .15s, border-color .15s, transform .08s, box-shadow .15s;
+    white-space: nowrap;
+  }
+  button:hover, .btn:hover { background: var(--surface-2); border-color: var(--text-faint); }
+  button:active { transform: translateY(1px); }
+  button.primary {
+    background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600;
+  }
+  [data-theme="dark"] button.primary { color: #1b1a1f; }
+  button.primary:hover { filter: brightness(1.07); background: var(--accent); }
+  button.ghost { border-color: transparent; background: transparent; color: var(--text-dim); }
+  button.ghost:hover { background: var(--surface-2); color: var(--text); }
+  button.danger { color: var(--danger); border-color: transparent; background: transparent; }
+  button.danger:hover { background: var(--surface-2); border-color: var(--danger); }
+  button.icon { padding: 7px 10px; }
+
+  /* ---------- hero: next birthdays ---------- */
+  .hero {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 18px; padding: 22px 24px; margin-bottom: 22px;
+    box-shadow: var(--shadow); position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ""; position: absolute; inset: 0 auto 0 0; width: 4px;
+    background: linear-gradient(180deg, var(--accent), transparent);
+  }
+  .hero-label {
+    font-size: 11px; letter-spacing: .18em; color: var(--text-faint);
+    text-transform: uppercase; margin-bottom: 14px; font-weight: 600;
+  }
+  .hero-list { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 16px 10px 10px; border-radius: 12px;
+    background: var(--surface-2); border: 1px solid var(--border);
+    min-width: 210px;
+  }
+  .hero-item.today {
+    background: var(--accent-soft); border-color: var(--accent);
+  }
+  .hero-thumb {
+    width: 46px; height: 46px; border-radius: 10px; object-fit: cover;
+    background: var(--border); flex-shrink: 0;
+    display: grid; place-items: center; font-size: 17px; color: var(--text-faint);
+  }
+  .hero-name { font-weight: 600; font-size: 14px; line-height: 1.3; }
+  .hero-when { font-size: 12px; color: var(--text-dim); }
+  .hero-days { font-size: 12px; color: var(--accent); font-weight: 700; }
+  .hero-empty { color: var(--text-faint); font-size: 13px; }
+
+  /* ---------- toolbar ---------- */
+  .toolbar {
+    display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    margin-bottom: 18px;
+  }
+  input[type="text"], input[type="number"], select, textarea {
+    font: inherit; font-size: 13px; color: var(--text);
+    background: var(--surface); border: 1px solid var(--border-strong);
+    border-radius: 9px; padding: 7px 11px; outline: none;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  .search { flex: 1; min-width: 180px; max-width: 320px; }
+  .seg { display: flex; border: 1px solid var(--border-strong); border-radius: 9px; overflow: hidden; }
+  .seg button {
+    border: none; border-radius: 0; background: var(--surface);
+    padding: 7px 13px; color: var(--text-dim); font-size: 12.5px;
+  }
+  .seg button + button { border-left: 1px solid var(--border); }
+  .seg button.on { background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+  .count { font-size: 12px; color: var(--text-faint); margin-left: auto; }
+
+  /* ---------- card grid ---------- */
+  .grid {
+    display: grid; gap: 16px; align-items: start;
+    grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+  }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+    display: flex; flex-direction: column; position: relative;
+    transition: transform .16s cubic-bezier(.2,.7,.3,1), box-shadow .16s;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+  .card-accent { height: 4px; background: var(--accent); }
+  .card-img {
+    aspect-ratio: 4 / 5; width: 100%; object-fit: cover; display: block;
+    background: var(--surface-2); cursor: pointer;
+  }
+  .card-img-ph {
+    height: 92px; display: grid; place-items: center; align-content: center;
+    background: repeating-linear-gradient(45deg, var(--surface-2) 0 10px, var(--surface) 10px 20px);
+    color: var(--text-faint); font-size: 12px; cursor: pointer; gap: 6px;
+  }
+  .card-img-ph span:first-child { font-size: 26px; opacity: .5; }
+  .card-body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 7px; flex: 1; }
+  .card-reading { font-size: 10.5px; color: var(--text-faint); letter-spacing: .08em; line-height: 1; }
+  .card-name {
+    font-size: 15.5px; font-weight: 700; line-height: 1.3; letter-spacing: .02em;
+    display: flex; align-items: baseline; gap: 7px; flex-wrap: wrap;
+  }
+  .card-age { font-size: 11.5px; font-weight: 500; color: var(--text-dim); }
+  .card-bday {
+    display: flex; align-items: baseline; gap: 7px;
+    font-variant-numeric: tabular-nums;
+  }
+  .card-bday .date { font-size: 15px; font-weight: 700; letter-spacing: .01em; }
+  .card-bday .sign { font-size: 11px; color: var(--text-dim); }
+  .card-countdown {
+    font-size: 11px; font-weight: 700; color: var(--accent);
+    background: var(--accent-soft); border-radius: 6px;
+    padding: 1px 7px; display: inline-block; align-self: flex-start;
+  }
+  .card-countdown.today { background: var(--accent); color: #fff; }
+  [data-theme="dark"] .card-countdown.today { color: #1b1a1f; }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: auto; padding-top: 4px; }
+  .tag {
+    font-size: 10.5px; padding: 2px 8px; border-radius: 20px;
+    border: 1px solid var(--border-strong); color: var(--text-dim);
+    background: var(--surface-2); line-height: 1.6;
+  }
+  .tag.series { border-color: var(--accent); color: var(--accent); background: transparent; font-weight: 600; }
+  .card-note {
+    font-size: 11.5px; color: var(--text-dim); line-height: 1.55;
+    border-left: 2px solid var(--border-strong); padding-left: 8px;
+  }
+  .status-dot {
+    position: absolute; top: 12px; right: 12px; z-index: 2;
+    font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight: 700;
+    backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.35);
+  }
+  .status-公開 { background: rgba(56,142,90,.9); color: #fff; }
+  .status-非公開 { background: rgba(70,66,80,.85); color: #fff; }
+  .status-仮設定 { background: rgba(196,142,45,.92); color: #fff; }
+  .card-actions {
+    display: flex; gap: 4px; padding: 0 8px 8px; opacity: 0; transition: opacity .15s;
+  }
+  .card:hover .card-actions, .card:focus-within .card-actions { opacity: 1; }
+  .card-actions button { flex: 1; font-size: 11.5px; padding: 5px; }
+
+  /* ---------- month view ---------- */
+  .months { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+  .month {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow);
+  }
+  .month.empty { opacity: .45; }
+  .month.current { border-color: var(--accent); }
+  .month h3 {
+    margin: 0 0 10px; font-size: 12px; letter-spacing: .16em; color: var(--text-faint);
+    display: flex; align-items: baseline; gap: 8px; font-weight: 700;
+  }
+  .month h3 b { font-size: 22px; color: var(--text); letter-spacing: 0; }
+  .month.current h3 b { color: var(--accent); }
+  .mrow {
+    display: flex; align-items: center; gap: 10px; padding: 5px 0;
+    border-top: 1px solid var(--border); cursor: pointer;
+  }
+  .mrow:hover { color: var(--accent); }
+  .mrow .d {
+    font-variant-numeric: tabular-nums; font-weight: 700; font-size: 13px;
+    min-width: 30px; text-align: right; color: var(--text-dim);
+  }
+  .mrow .swatch { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .mrow .n { font-size: 13px; }
+  .mrow .s { font-size: 10.5px; color: var(--text-faint); margin-left: auto; }
+  .month .none { font-size: 11.5px; color: var(--text-faint); padding: 4px 0; }
+
+  /* ---------- table view ---------- */
+  .tablewrap {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: auto; box-shadow: var(--shadow);
+  }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th, td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  th {
+    font-size: 11px; letter-spacing: .1em; color: var(--text-faint);
+    background: var(--surface-2); position: sticky; top: 0; font-weight: 700;
+  }
+  tbody tr:hover { background: var(--surface-2); }
+  tbody tr { cursor: pointer; }
+  td.num { font-variant-numeric: tabular-nums; }
+  .tbl-thumb { width: 30px; height: 30px; border-radius: 6px; object-fit: cover; background: var(--border); display: block; }
+
+  /* ---------- wallpaper / export ---------- */
+  .wallpanel { display: grid; grid-template-columns: 268px 1fr; gap: 20px; align-items: start; }
+  @media (max-width: 860px) { .wallpanel { grid-template-columns: 1fr; } }
+  .wall-side {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 16px 18px; box-shadow: var(--shadow); display: grid; gap: 13px;
+    position: sticky; top: 16px;
+  }
+  .wall-side h4 {
+    margin: 0; font-size: 11px; letter-spacing: .16em; color: var(--text-faint); font-weight: 700;
+  }
+  .ym { display: flex; align-items: center; gap: 6px; }
+  .ym select { flex: 1; }
+  .ym button { padding: 7px 11px; }
+  .wall-side label.f select, .wall-side label.f input { width: 100%; }
+  .chk { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-dim); cursor: pointer; }
+  .chk input { accent-color: var(--accent); width: 15px; height: 15px; }
+  .wall-side .dl { display: grid; gap: 7px; margin-top: 3px; }
+  .wall-preview {
+    display: grid; place-items: center; padding: 18px;
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: var(--radius); min-height: 380px;
+  }
+  .wall-preview canvas {
+    width: auto; height: auto; max-width: 100%; max-height: 68vh;
+    border-radius: 8px; box-shadow: var(--shadow-lg); background: #fff;
+  }
+  .wall-meta { font-size: 11px; color: var(--text-faint); text-align: center; margin-top: 10px; }
+  .customwh { display: none; gap: 8px; }
+  .customwh.on { display: grid; grid-template-columns: 1fr 1fr; }
+
+  /* ---------- empty state ---------- */
+  .empty-state {
+    text-align: center; padding: 72px 24px; color: var(--text-faint);
+    border: 1.5px dashed var(--border-strong); border-radius: 18px;
+  }
+  .empty-state .big { font-size: 38px; opacity: .35; }
+  .empty-state p { margin: 12px 0 20px; font-size: 13.5px; }
+
+  /* ---------- modal ---------- */
+  .backdrop {
+    position: fixed; inset: 0; background: rgba(20,17,14,.5);
+    backdrop-filter: blur(3px); z-index: 50; display: grid; place-items: center;
+    padding: 20px; overflow: auto;
+  }
+  .backdrop[hidden] { display: none; }
+  .modal {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 18px;
+    box-shadow: var(--shadow-lg); width: min(720px, 100%); max-height: 92vh;
+    overflow: auto; padding: 24px 26px 22px;
+  }
+  .modal h2 { margin: 0 0 18px; font-size: 16px; letter-spacing: .04em; }
+  .form-grid { display: grid; grid-template-columns: 178px 1fr; gap: 20px; }
+  @media (max-width: 620px) { .form-grid { grid-template-columns: 1fr; } }
+  .drop {
+    aspect-ratio: 4/5; border: 1.5px dashed var(--border-strong); border-radius: 12px;
+    display: grid; place-items: center; cursor: pointer; overflow: hidden;
+    background: var(--surface-2); color: var(--text-faint); font-size: 11.5px;
+    text-align: center; padding: 10px; position: relative;
+  }
+  .drop:hover, .drop.over { border-color: var(--accent); color: var(--accent); }
+  .drop img { width: 100%; height: 100%; object-fit: cover; }
+  .fields { display: grid; gap: 12px; align-content: start; }
+  .row { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; }
+  .row.three { grid-template-columns: 1fr 1fr 1fr; }
+  label.f { display: grid; gap: 4px; font-size: 11px; color: var(--text-dim); letter-spacing: .06em; font-weight: 600; }
+  label.f input, label.f select, label.f textarea { width: 100%; }
+  textarea { resize: vertical; min-height: 54px; font-size: 13px; }
+  .colorline { display: flex; gap: 8px; align-items: center; }
+  input[type="color"] {
+    width: 38px; height: 33px; padding: 2px; border-radius: 8px;
+    border: 1px solid var(--border-strong); background: var(--surface); cursor: pointer;
+  }
+  .swatches { display: flex; gap: 5px; flex-wrap: wrap; }
+  .swatches i {
+    width: 17px; height: 17px; border-radius: 50%; cursor: pointer; display: block;
+    border: 1px solid rgba(0,0,0,.12);
+  }
+  .swatches i:hover { transform: scale(1.18); }
+  .signout { font-size: 11px; color: var(--accent); font-weight: 700; letter-spacing: .04em; }
+  .modal-foot { display: flex; gap: 8px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+  .modal-foot .spacer { flex: 1; }
+  .hint { font-size: 11px; color: var(--text-faint); }
+
+  /* ---------- lightbox ---------- */
+  .lightbox {
+    position: fixed; inset: 0; background: rgba(15,13,11,.88); z-index: 90;
+    display: grid; place-items: center; padding: 30px; cursor: zoom-out;
+  }
+  .lightbox[hidden] { display: none; }
+  .lightbox img { max-width: 100%; max-height: 100%; border-radius: 10px; box-shadow: var(--shadow-lg); }
+
+  /* ---------- toast ---------- */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--text); color: var(--bg); padding: 10px 20px; border-radius: 10px;
+    font-size: 13px; font-weight: 600; z-index: 200; opacity: 0;
+    transition: transform .28s cubic-bezier(.2,.8,.3,1), opacity .28s; pointer-events: none;
+    box-shadow: var(--shadow-lg);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+  /* ---------- brand ---------- */
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .mark { width: 38px; height: 38px; flex-shrink: 0; }
+  .mark .st { stroke: var(--accent); fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .mark .dot { fill: var(--gold); }
+  .brandtext { display: grid; gap: 1px; }
+  header.top h1 {
+    font-family: var(--font-disp); font-style: italic; font-weight: 600;
+    font-size: 30px; line-height: 1.05; letter-spacing: .01em; color: var(--accent);
+    margin: 0;
+  }
+  .acts { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .savemark {
+    font-size: 11px; color: var(--text-faint); letter-spacing: .06em;
+    transition: color .2s; white-space: nowrap;
+  }
+  .savemark.on { color: var(--accent); }
+
+  @media (max-width: 680px) {
+    header.top { padding: 20px 0 14px; gap: 10px; }
+    .mark { width: 32px; height: 32px; }
+    header.top h1 { font-size: 25px; }
+    header.top .spacer { display: none; }
+    .acts { width: 100%; }
+    .acts button { flex: 1; font-size: 12px; padding: 8px 6px; }
+    .acts #btn-savehtml { display: none; }
+    .grid { grid-template-columns: repeat(auto-fill, minmax(46%, 1fr)); gap: 12px; }
+    .hero { padding: 16px 16px 18px; }
+    .hero-item { min-width: 0; flex: 1 1 100%; padding: 8px 12px 8px 8px; }
+    .hero-item:nth-child(n+3) { display: none; }
+    .hero-thumb { width: 40px; height: 40px; }
+    .acts { display: grid; grid-template-columns: auto auto 1fr 1fr; gap: 6px; align-items: center; }
+    .acts #btn-add { grid-column: 1 / -1; padding: 11px; font-size: 13px; }
+    .toolbar > * { flex: 1 1 auto; }
+    .search { max-width: none; }
+    .wall-side { position: static; }
+    .modal { padding: 18px 16px 16px; border-radius: 16px; }
+  }
+
+  footer.tips {
+    margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--border);
+    font-size: 11.5px; color: var(--text-faint); line-height: 1.9;
+  }
+  footer.tips b { color: var(--text-dim); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 512 512" aria-hidden="true">
+        <path class="st" stroke-width="11" d="M216 228 V166"/>
+        <path class="st" stroke-width="11" d="M296 228 V166"/>
+        <rect class="st" stroke-width="12" x="180" y="212" width="152" height="162" rx="18"/>
+        <path class="st" stroke-width="11" d="M184 256 H328"/>
+        <circle class="dot" cx="256" cy="316" r="19"/>
+      </svg>
+      <div class="brandtext">
+        <h1>Éphéméride</h1>
+        <span class="sub" id="today-label"></span>
+      </div>
+    </div>
+    <span class="spacer"></span>
+    <div class="acts">
+      <span class="savemark" id="savemark">自動保存</span>
+      <button class="icon ghost" id="btn-theme" title="表示テーマ切替">◐</button>
+      <button id="btn-import">読み込み</button>
+      <button id="btn-export">JSON書き出し</button>
+      <button id="btn-savehtml" title="データを埋め込んだHTMLを書き出します">HTMLで複製</button>
+      <button class="primary" id="btn-add">＋ キャラを追加</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-label">Next Birthdays ／ 次に来る誕生日</div>
+    <div class="hero-list" id="hero-list"></div>
+  </section>
+
+  <div class="toolbar">
+    <input type="text" class="search" id="q" placeholder="名前・媒体・シリーズで検索">
+    <select id="f-series"><option value="">すべてのシリーズ</option></select>
+    <select id="f-status">
+      <option value="">すべての状態</option>
+      <option>公開</option><option>非公開</option><option>仮設定</option>
+    </select>
+    <select id="sort">
+      <option value="next">誕生日が近い順</option>
+      <option value="date">誕生日順（1月→12月）</option>
+      <option value="name">名前順（よみ）</option>
+      <option value="series">シリーズ順</option>
+    </select>
+    <div class="seg" id="viewseg">
+      <button data-view="card" class="on">カード</button>
+      <button data-view="month">月別</button>
+      <button data-view="table">一覧</button>
+      <button data-view="wall">壁紙・画像</button>
+    </div>
+    <span class="count" id="count"></span>
+  </div>
+
+  <main id="main"></main>
+
+  <footer class="tips">
+    <b>使い方メモ</b>　入力した内容はこの端末のブラウザに<b>自動保存</b>されます（サーバーには何も送信されません）。<br>
+    バックアップや別の端末へ移したいときは「<b>JSON書き出し</b>」でファイルに保存し、移動先で「<b>読み込み</b>」してください。<br>
+    「<b>HTMLで複製</b>」は、データを埋め込んだHTMLを1ファイルとして書き出します。保管用や配布用にどうぞ。
+  </footer>
+</div>
+
+<!-- ===== edit modal ===== -->
+<div class="backdrop" id="modal" hidden>
+  <div class="modal">
+    <h2 id="modal-title">キャラクターを追加</h2>
+    <div class="form-grid">
+      <div>
+        <div class="drop" id="drop">
+          <div id="drop-ph">クリックまたは<br>ドラッグ＆ドロップ<br><span class="hint">で立ち絵を追加</span></div>
+          <img id="drop-img" hidden alt="">
+        </div>
+        <div style="display:flex;gap:6px;margin-top:8px">
+          <button class="ghost" id="btn-img-clear" style="flex:1;font-size:11.5px">画像を外す</button>
+        </div>
+        <input type="file" id="file" accept="image/*" hidden>
+      </div>
+
+      <div class="fields">
+        <div class="row">
+          <label class="f">名前
+            <input type="text" id="f-name" placeholder="例：宵風 灯">
+          </label>
+          <label class="f">よみ（並び替え用）
+            <input type="text" id="f-reading" placeholder="よいかぜ あかり">
+          </label>
+        </div>
+
+        <div class="row three">
+          <label class="f">誕生月
+            <select id="f-month"></select>
+          </label>
+          <label class="f">誕生日
+            <select id="f-day"></select>
+          </label>
+          <label class="f">星座（自動）
+            <div class="signout" id="f-sign" style="padding:8px 0 0">—</div>
+          </label>
+        </div>
+
+        <div class="row">
+          <label class="f">設定年齢
+            <input type="text" id="f-age" placeholder="17／外見17／不明 など">
+          </label>
+          <label class="f">状態
+            <select id="f-statusi"><option>公開</option><option>非公開</option><option>仮設定</option></select>
+          </label>
+        </div>
+
+        <div class="row">
+          <label class="f">掲載媒体（カンマ区切り）
+            <input type="text" id="f-media" placeholder="pixiv, X, 個人サイト">
+          </label>
+          <label class="f">シリーズ
+            <input type="text" id="f-seriesi" list="series-list" placeholder="センチネルバース（無ければ空欄）">
+            <datalist id="series-list"></datalist>
+          </label>
+        </div>
+
+        <label class="f">テーマカラー
+          <div class="colorline">
+            <input type="color" id="f-color" value="#b8763e">
+            <div class="swatches" id="swatches"></div>
+          </div>
+        </label>
+
+        <label class="f">誕生日の由来・メモ
+          <textarea id="f-note" placeholder="語呂合わせ、モチーフの花の日、季節の理由など"></textarea>
+        </label>
+      </div>
+    </div>
+
+    <div class="modal-foot">
+      <button class="danger" id="btn-delete" hidden>削除</button>
+      <span class="spacer"></span>
+      <button id="btn-cancel">キャンセル</button>
+      <button class="primary" id="btn-save">保存</button>
+    </div>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" hidden><img id="lightbox-img" alt=""></div>
+<div class="toast" id="toast"></div>
+
+<script id="seed-data" type="application/json">[]</script>
+<script>
+(function () {
+  "use strict";
+
+  /* 素のHTMLを退避（データ埋め込み保存に使う）——描画前に取得する */
+  var PRISTINE = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+
+  /* ---------- 定数 ---------- */
+  var SIGNS = [
+    [1,20,"やぎ座"],[2,19,"みずがめ座"],[3,21,"うお座"],[4,20,"おひつじ座"],
+    [5,21,"おうし座"],[6,22,"ふたご座"],[7,23,"かに座"],[8,23,"しし座"],
+    [9,23,"おとめ座"],[10,24,"てんびん座"],[11,23,"さそり座"],[12,22,"いて座"]
+  ];
+  function signOf(m, d) {
+    if (!m || !d) return "";
+    var e = SIGNS[m - 1];
+    return d < e[1] ? e[2] : (m === 12 ? "やぎ座" : SIGNS[m][2]);
+  }
+  var PALETTE = ["#b8763e","#c8514c","#d98b3f","#c9a227","#6f9b4c","#3f8f86",
+                 "#3d6fa8","#5f5bb0","#8f5aa8","#c2568c","#6b6560","#2f2b28"];
+
+  /* ---------- 状態 ---------- */
+  var chars = [];
+  try { chars = JSON.parse(document.getElementById("seed-data").textContent) || []; }
+  catch (e) { chars = []; }
+  var view = "card", editingId = null, pendingImg = null;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c];
+    });
+  };
+  var uid = function () { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); };
+
+  /* ---------- 日付 ---------- */
+  function today() { var t = new Date(); t.setHours(0,0,0,0); return t; }
+  function daysUntil(m, d) {
+    if (!m || !d) return null;
+    var t = today(), y = t.getFullYear();
+    function mk(yy) {
+      var dd = d;
+      if (m === 2 && d === 29 && !(yy % 4 === 0 && (yy % 100 !== 0 || yy % 400 === 0))) dd = 28;
+      return new Date(yy, m - 1, dd);
+    }
+    var next = mk(y);
+    if (next < t) next = mk(y + 1);
+    return Math.round((next - t) / 86400000);
+  }
+  function countdownText(n) {
+    if (n === null) return "";
+    if (n === 0) return "🎂 今日！";
+    if (n === 1) return "明日";
+    if (n <= 30) return "あと " + n + " 日";
+    return "あと " + n + " 日";
+  }
+
+  /* ---------- 画像 ---------- */
+  function readImage(file, cb) {
+    if (!file || !/^image\//.test(file.type)) return;
+    var fr = new FileReader();
+    fr.onload = function () {
+      var img = new Image();
+      img.onload = function () {
+        var MAX = 900, w = img.width, h = img.height;
+        var s = Math.min(1, MAX / Math.max(w, h));
+        var c = document.createElement("canvas");
+        c.width = Math.round(w * s); c.height = Math.round(h * s);
+        c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+        var out = c.toDataURL("image/webp", 0.88);
+        if (out.indexOf("data:image/webp") !== 0) out = c.toDataURL("image/png");
+        cb(out);
+      };
+      img.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+  }
+
+  /* ---------- 派生データ ---------- */
+  function decorate(c) {
+    var o = Object.create(c);
+    o.days = daysUntil(c.month, c.day);
+    o.sign = signOf(c.month, c.day);
+    return o;
+  }
+  function visible() {
+    var q = $("q").value.trim().toLowerCase();
+    var fs = $("f-series").value, fst = $("f-status").value;
+    var list = chars.filter(function (c) {
+      if (fs && (c.series || "") !== fs) return false;
+      if (fst && (c.status || "公開") !== fst) return false;
+      if (!q) return true;
+      return [c.name, c.reading, c.series, (c.media || []).join(" "), c.note, signOf(c.month, c.day)]
+        .join(" ").toLowerCase().indexOf(q) >= 0;
+    }).map(decorate);
+
+    var s = $("sort").value;
+    list.sort(function (a, b) {
+      if (s === "next") return (a.days == null ? 9e9 : a.days) - (b.days == null ? 9e9 : b.days);
+      if (s === "date") return (a.month * 100 + a.day) - (b.month * 100 + b.day);
+      if (s === "name") return (a.reading || a.name || "").localeCompare(b.reading || b.name || "", "ja");
+      return (a.series || "￿").localeCompare(b.series || "￿", "ja")
+          || (a.month * 100 + a.day) - (b.month * 100 + b.day);
+    });
+    return list;
+  }
+
+  /* ---------- 描画 ---------- */
+  function render() {
+    var t = new Date();
+    $("today-label").textContent = t.getFullYear() + "年" + (t.getMonth() + 1) + "月" + t.getDate() + "日 現在";
+
+    /* シリーズ絞り込みの選択肢 */
+    var seriesSet = [];
+    chars.forEach(function (c) { if (c.series && seriesSet.indexOf(c.series) < 0) seriesSet.push(c.series); });
+    seriesSet.sort(function (a, b) { return a.localeCompare(b, "ja"); });
+    var sel = $("f-series"), keep = sel.value;
+    sel.innerHTML = '<option value="">すべてのシリーズ</option>' +
+      seriesSet.map(function (s) { return '<option>' + esc(s) + '</option>'; }).join("");
+    sel.value = keep;
+    $("series-list").innerHTML = seriesSet.map(function (s) { return '<option value="' + esc(s) + '">'; }).join("");
+
+    renderHero();
+    var list = visible();
+    $("count").textContent = list.length + " / " + chars.length + " 人";
+
+    var main = $("main");
+    if (!chars.length) {
+      main.innerHTML = '<div class="empty-state"><div class="big">🎂</div>' +
+        '<p>まだキャラクターが登録されていません。<br>「＋ キャラを追加」から始めましょう。</p>' +
+        '<button class="primary" id="es-add">＋ 最初のキャラを追加</button> ' +
+        '<button id="es-demo">サンプルを見てみる</button></div>';
+      $("es-add").onclick = function () { openModal(null); };
+      $("es-demo").onclick = loadDemo;
+      return;
+    }
+    if (view === "card") renderCards(list, main);
+    else if (view === "month") renderMonths(main);
+    else if (view === "wall") renderWall(main);
+    else renderTable(list, main);
+  }
+
+  function renderHero() {
+    var up = chars.map(decorate).filter(function (c) { return c.days !== null; })
+      .sort(function (a, b) { return a.days - b.days; }).slice(0, 4);
+    var el = $("hero-list");
+    if (!up.length) { el.innerHTML = '<span class="hero-empty">誕生日を登録すると、ここに次に来る子が並びます。</span>'; return; }
+    el.innerHTML = up.map(function (c) {
+      var thumb = c.img
+        ? '<img class="hero-thumb" src="' + c.img + '" alt="">'
+        : '<div class="hero-thumb" style="background:' + esc(c.color || "#ccc") + '33;color:' + esc(c.color || "#999") + '">' + esc((c.name || "?").slice(0, 1)) + '</div>';
+      return '<div class="hero-item' + (c.days === 0 ? " today" : "") + '" data-id="' + c.id + '">' + thumb +
+        '<div><div class="hero-name">' + esc(c.name || "（無名）") + '</div>' +
+        '<div class="hero-when">' + c.month + '月' + c.day + '日 ・ <span class="hero-days">' + countdownText(c.days) + '</span></div>' +
+        '</div></div>';
+    }).join("");
+    Array.prototype.forEach.call(el.children, function (n) {
+      n.onclick = function () { openModal(n.dataset.id); };
+      n.style.cursor = "pointer";
+    });
+  }
+
+  function renderCards(list, main) {
+    main.className = "grid";
+    main.innerHTML = list.map(function (c) {
+      var col = c.color || "#b8763e";
+      var img = c.img
+        ? '<img class="card-img" src="' + c.img + '" alt="' + esc(c.name) + '" data-zoom="' + c.id + '">'
+        : '<div class="card-img-ph" data-edit="' + c.id + '"><span>🖼</span><span>画像なし</span></div>';
+      var tags = [];
+      if (c.series) tags.push('<span class="tag series">' + esc(c.series) + '</span>');
+      (c.media || []).forEach(function (m) { tags.push('<span class="tag">' + esc(m) + '</span>'); });
+      return '<article class="card">' +
+        '<div class="card-accent" style="background:' + esc(col) + '"></div>' +
+        '<span class="status-dot status-' + esc(c.status || "公開") + '">' + esc(c.status || "公開") + '</span>' +
+        img +
+        '<div class="card-body">' +
+          (c.reading ? '<div class="card-reading">' + esc(c.reading) + '</div>' : '') +
+          '<div class="card-name">' + esc(c.name || "（無名）") +
+            (c.age ? '<span class="card-age">' + esc(c.age) + (/^\d+$/.test(c.age) ? "歳" : "") + '</span>' : '') +
+          '</div>' +
+          '<div class="card-bday"><span class="date" style="color:' + esc(col) + '">' + c.month + '/' + c.day + '</span>' +
+            '<span class="sign">' + esc(c.sign) + '</span></div>' +
+          '<span class="card-countdown' + (c.days === 0 ? " today" : "") + '"' +
+            (c.days === 0 ? '' : ' style="color:' + esc(col) + ';background:' + esc(col) + '1a"') + '>' +
+            countdownText(c.days) + '</span>' +
+          (c.note ? '<div class="card-note">' + esc(c.note) + '</div>' : '') +
+          (tags.length ? '<div class="tags">' + tags.join("") + '</div>' : '') +
+        '</div>' +
+        '<div class="card-actions"><button data-edit="' + c.id + '">編集</button></div>' +
+      '</article>';
+    }).join("");
+    main.querySelectorAll("[data-edit]").forEach(function (b) {
+      b.onclick = function () { openModal(b.dataset.edit); };
+    });
+    main.querySelectorAll("[data-zoom]").forEach(function (b) {
+      b.onclick = function () { $("lightbox-img").src = b.src; $("lightbox").hidden = false; };
+    });
+  }
+
+  function renderMonths(main) {
+    main.className = "months";
+    var cur = new Date().getMonth() + 1;
+    var q = $("q").value.trim().toLowerCase();
+    var ids = {}; visible().forEach(function (c) { ids[c.id] = 1; });
+    var html = "";
+    for (var m = 1; m <= 12; m++) {
+      var inM = chars.filter(function (c) { return c.month === m && ids[c.id]; })
+        .sort(function (a, b) { return a.day - b.day; });
+      html += '<div class="month' + (inM.length ? "" : " empty") + (m === cur ? " current" : "") + '">' +
+        '<h3><b>' + m + '</b> MONTH　<span style="margin-left:auto;font-weight:400">' + (inM.length || 0) + '人</span></h3>' +
+        (inM.length ? inM.map(function (c) {
+          return '<div class="mrow" data-edit="' + c.id + '">' +
+            '<span class="d">' + c.day + '</span>' +
+            '<span class="swatch" style="background:' + esc(c.color || "#bbb") + '"></span>' +
+            '<span class="n">' + esc(c.name || "（無名）") + '</span>' +
+            '<span class="s">' + esc(c.series || "") + '</span></div>';
+        }).join("") : '<div class="none">—</div>') + '</div>';
+    }
+    main.innerHTML = html;
+    main.querySelectorAll("[data-edit]").forEach(function (b) {
+      b.onclick = function () { openModal(b.dataset.edit); };
+    });
+  }
+
+  function renderTable(list, main) {
+    main.className = "tablewrap";
+    main.innerHTML = '<table><thead><tr>' +
+      '<th></th><th>名前</th><th>誕生日</th><th>星座</th><th>あと</th><th>年齢</th>' +
+      '<th>シリーズ</th><th>掲載媒体</th><th>状態</th><th>由来メモ</th></tr></thead><tbody>' +
+      list.map(function (c) {
+        return '<tr data-edit="' + c.id + '">' +
+          '<td>' + (c.img ? '<img class="tbl-thumb" src="' + c.img + '">' : '<div class="tbl-thumb" style="background:' + esc(c.color || "#ccc") + '33"></div>') + '</td>' +
+          '<td><b>' + esc(c.name || "（無名）") + '</b>' + (c.reading ? ' <span style="color:var(--text-faint);font-size:11px">' + esc(c.reading) + '</span>' : '') + '</td>' +
+          '<td class="num">' + c.month + '月' + c.day + '日</td>' +
+          '<td>' + esc(c.sign) + '</td>' +
+          '<td class="num" style="color:var(--accent);font-weight:700">' + countdownText(c.days) + '</td>' +
+          '<td class="num">' + esc(c.age || "—") + '</td>' +
+          '<td>' + esc(c.series || "—") + '</td>' +
+          '<td>' + esc((c.media || []).join("・") || "—") + '</td>' +
+          '<td>' + esc(c.status || "公開") + '</td>' +
+          '<td style="white-space:normal;max-width:280px;color:var(--text-dim)">' + esc(c.note || "") + '</td>' +
+        '</tr>';
+      }).join("") + '</tbody></table>';
+    main.querySelectorAll("[data-edit]").forEach(function (r) {
+      r.onclick = function () { openModal(r.dataset.edit); };
+    });
+  }
+
+  /* ========== 壁紙・カレンダー画像 ========== */
+  var MONTH_EN = ["January","February","March","April","May","June",
+                  "July","August","September","October","November","December"];
+  var PRESETS = {
+    iphone:    [1179, 2556, "スマホ壁紙 iPhone 15/16"],
+    iphonemax: [1290, 2796, "スマホ壁紙 iPhone Pro Max"],
+    android:   [1080, 2340, "スマホ壁紙 Android 一般"],
+    story:     [1080, 1920, "ストーリー / 縦長SNS"],
+    square:    [1080, 1080, "正方形 / Instagram"],
+    wide:      [1200,  675, "横長 / X（Twitter）"],
+    a4:        [2480, 3508, "A4 印刷（300dpi）"],
+    custom:    [1080, 1920, "カスタム"]
+  };
+  var THEMES = {
+    light: { bg:"#EDEDED", bg2:"#FBFAF9", line:"#DCD5D3", text:"#4B3C39", dim:"#7C6C67",
+             faint:"#C9C0BC", head:"#F1EDEC", sat:"#5B7A9E", sun:"#B0433F", accent:"#922951" },
+    dark:  { bg:"#191317", bg2:"#221b20", line:"#3a3038", text:"#ece4e6", dim:"#a99aa1",
+             faint:"#5c525a", head:"#2a2229", sat:"#8fb0d2", sun:"#e2766c", accent:"#d2789a" },
+    paper: { bg:"#EFE8DA", bg2:"#F9F4E9", line:"#D8CEB9", text:"#4A3D33", dim:"#93856F",
+             faint:"#C3B69C", head:"#E7DEC9", sat:"#54759A", sun:"#A9503F", accent:"#8A4A2F" }
+  };
+  var wall = {
+    y: new Date().getFullYear(), m: new Date().getMonth() + 1,
+    preset: "iphone", cw: 1179, ch: 2556, theme: "light",
+    start: 1, show: "both", clock: true, legend: true, tint: true
+  };
+  var imgCache = {};
+
+  function hexA(hex, a) {
+    var h = (hex || "#b8763e").replace("#", "");
+    if (h.length === 3) h = h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+    var n = parseInt(h, 16);
+    return "rgba(" + ((n>>16)&255) + "," + ((n>>8)&255) + "," + (n&255) + "," + a + ")";
+  }
+  function fitText(ctx, s, max) {
+    if (ctx.measureText(s).width <= max) return s;
+    var t = s;
+    while (t.length > 1 && ctx.measureText(t + "…").width > max) t = t.slice(0, -1);
+    return t + "…";
+  }
+  function loadImgs(list, cb) {
+    var need = list.filter(function (c) { return c.img; });
+    if (!need.length) return cb({});
+    var map = {}, done = 0;
+    need.forEach(function (c) {
+      function fin(im) { map[c.id] = im; if (++done === need.length) cb(map); }
+      if (imgCache[c.id] && imgCache[c.id].src === c.img) return fin(imgCache[c.id]);
+      var im = new Image();
+      im.onload = function () { imgCache[c.id] = im; fin(im); };
+      im.onerror = function () { fin(null); };
+      im.src = c.img;
+    });
+  }
+
+  function renderWall(main) {
+    main.className = "wallpanel";
+    var pOpts = Object.keys(PRESETS).map(function (k) {
+      return '<option value="' + k + '">' + PRESETS[k][2] + '</option>';
+    }).join("");
+    var yNow = new Date().getFullYear(), yOpts = "";
+    for (var y = yNow - 1; y <= yNow + 3; y++) yOpts += '<option value="' + y + '">' + y + '年</option>';
+    var mOpts = "";
+    for (var m = 1; m <= 12; m++) mOpts += '<option value="' + m + '">' + m + '月</option>';
+
+    main.innerHTML =
+      '<div class="wall-side">' +
+        '<h4>カレンダー画像を書き出す</h4>' +
+        '<div class="ym">' +
+          '<button id="w-prev" title="前の月">‹</button>' +
+          '<select id="w-year">' + yOpts + '</select>' +
+          '<select id="w-month">' + mOpts + '</select>' +
+          '<button id="w-next" title="次の月">›</button>' +
+        '</div>' +
+        '<label class="f">出力サイズ<select id="w-preset">' + pOpts + '</select></label>' +
+        '<div class="customwh" id="w-custom">' +
+          '<label class="f">幅 px<input type="number" id="w-cw" min="200" max="6000"></label>' +
+          '<label class="f">高さ px<input type="number" id="w-ch" min="200" max="6000"></label>' +
+        '</div>' +
+        '<label class="f">配色<select id="w-theme">' +
+          '<option value="light">ライト</option><option value="dark">ダーク</option>' +
+          '<option value="paper">クラフト紙</option></select></label>' +
+        '<label class="f">キャラの見せ方<select id="w-show">' +
+          '<option value="both">イラスト＋名前</option><option value="img">イラストのみ</option>' +
+          '<option value="name">名前のみ</option></select></label>' +
+        '<label class="f">週のはじまり<select id="w-start">' +
+          '<option value="1">月曜</option><option value="0">日曜</option></select></label>' +
+        '<label class="chk"><input type="checkbox" id="w-clock">上に時計スペースを空ける</label>' +
+        '<label class="chk"><input type="checkbox" id="w-legend">下に誕生日リストを入れる</label>' +
+        '<label class="chk"><input type="checkbox" id="w-tint">キャラの色を背景に薄く反映</label>' +
+        '<div class="dl">' +
+          '<button class="primary" id="w-dl">PNGでダウンロード</button>' +
+          '<button id="w-copy">画像をコピー（SNS貼り付け用）</button>' +
+        '</div>' +
+      '</div>' +
+      '<div><div class="wall-preview"><canvas id="wcanvas"></canvas></div>' +
+      '<div class="wall-meta" id="w-meta"></div></div>';
+
+    $("w-year").value = wall.y; $("w-month").value = wall.m;
+    $("w-preset").value = wall.preset; $("w-theme").value = wall.theme;
+    $("w-show").value = wall.show; $("w-start").value = String(wall.start);
+    $("w-cw").value = wall.cw; $("w-ch").value = wall.ch;
+    $("w-clock").checked = wall.clock; $("w-legend").checked = wall.legend;
+    $("w-tint").checked = wall.tint;
+    $("w-custom").classList.toggle("on", wall.preset === "custom");
+
+    function shift(d) {
+      var t = wall.m + d;
+      if (t < 1) { t = 12; wall.y--; } else if (t > 12) { t = 1; wall.y++; }
+      wall.m = t; $("w-year").value = wall.y; $("w-month").value = wall.m; drawWall();
+    }
+    $("w-prev").onclick = function () { shift(-1); };
+    $("w-next").onclick = function () { shift(1); };
+    $("w-year").onchange = function () { wall.y = +this.value; drawWall(); };
+    $("w-month").onchange = function () { wall.m = +this.value; drawWall(); };
+    $("w-preset").onchange = function () {
+      wall.preset = this.value;
+      var p = PRESETS[wall.preset];
+      if (wall.preset !== "custom") { wall.cw = p[0]; wall.ch = p[1]; $("w-cw").value = p[0]; $("w-ch").value = p[1]; }
+      $("w-custom").classList.toggle("on", wall.preset === "custom");
+      drawWall();
+    };
+    $("w-cw").oninput = function () { wall.cw = Math.max(200, Math.min(6000, +this.value || 1080)); drawWall(); };
+    $("w-ch").oninput = function () { wall.ch = Math.max(200, Math.min(6000, +this.value || 1920)); drawWall(); };
+    $("w-theme").onchange = function () { wall.theme = this.value; drawWall(); };
+    $("w-show").onchange = function () { wall.show = this.value; drawWall(); };
+    $("w-start").onchange = function () { wall.start = +this.value; drawWall(); };
+    $("w-clock").onchange = function () { wall.clock = this.checked; drawWall(); };
+    $("w-legend").onchange = function () { wall.legend = this.checked; drawWall(); };
+    $("w-tint").onchange = function () { wall.tint = this.checked; drawWall(); saveState(); };
+    $("w-dl").onclick = function () {
+      var cv = $("wcanvas");
+      cv.toBlob(function (b) {
+        download("calendar_" + wall.y + "-" + ("0" + wall.m).slice(-2) + ".png", b);
+        toast("画像を保存しました");
+      }, "image/png");
+    };
+    $("w-copy").onclick = function () {
+      var cv = $("wcanvas");
+      cv.toBlob(function (b) {
+        if (!navigator.clipboard || !window.ClipboardItem) { toast("このブラウザではコピー未対応です"); return; }
+        navigator.clipboard.write([new ClipboardItem({ "image/png": b })])
+          .then(function () { toast("画像をコピーしました"); })
+          .catch(function () { toast("コピーできませんでした（ダウンロードをお使いください）"); });
+      }, "image/png");
+    };
+    drawWall();
+  }
+
+  function drawWall() {
+    var cv = $("wcanvas"); if (!cv) return;
+    var W = wall.cw, H = wall.ch;
+    cv.width = W; cv.height = H;
+    var list = visible().filter(function (c) { return c.month === wall.m; })
+      .sort(function (a, b) { return a.day - b.day; });
+    var meta = $("w-meta");
+    if (meta) meta.textContent = W + " × " + H + " px　／　この月の誕生日 " + list.length + "人" +
+      ($("f-series").value ? "（" + $("f-series").value + " で絞り込み中）" : "");
+    loadImgs(list, function (imgs) { paintWall(cv.getContext("2d"), W, H, list, imgs); });
+  }
+
+  function paintWall(ctx, W, H, list, imgs) {
+    var T = THEMES[wall.theme] || THEMES.light;
+    var y = wall.y, m = wall.m;
+    var FONT = '"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif';
+    var DISP = '"Cormorant Garamond","Times New Roman",serif';
+    var f = function (size, weight) { return (weight || 400) + " " + Math.round(size) + "px " + FONT; };
+    var fd = function (size, weight, ital) { return (ital ? "italic " : "") + (weight || 400) + " " + Math.round(size) + "px " + DISP; };
+    var ratio = H / W;
+    var portrait = ratio >= 1.35, landscape = ratio <= 0.7;
+    var accent = (list[0] && list[0].color) || "#b8763e";
+
+    /* ---- 背景 ---- */
+    ctx.fillStyle = T.bg; ctx.fillRect(0, 0, W, H);
+    if (wall.tint && list.length) {
+      var g = ctx.createLinearGradient(0, 0, W * .6, H);
+      g.addColorStop(0, hexA(accent, wall.theme === "dark" ? .22 : .16));
+      g.addColorStop(.55, hexA(accent, 0));
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      var last = list[list.length - 1];
+      if (last && last.color && list.length > 1) {
+        var g2 = ctx.createLinearGradient(W, H, W * .35, H * .25);
+        g2.addColorStop(0, hexA(last.color, wall.theme === "dark" ? .2 : .14));
+        g2.addColorStop(1, hexA(last.color, 0));
+        ctx.fillStyle = g2; ctx.fillRect(0, 0, W, H);
+      }
+    }
+
+    /* ---- 暦の骨格 ---- */
+    var first = new Date(y, m - 1, 1).getDay();
+    var off = (first - wall.start + 7) % 7;
+    var dim = new Date(y, m, 0).getDate();
+    var rows = Math.ceil((off + dim) / 7);
+
+    var pad = Math.round(W * (portrait ? 0.065 : landscape ? 0.042 : 0.05));
+    var showList = wall.legend && list.length > 0;
+    var panelW = (landscape && showList) ? W * 0.30 : 0;
+    var titleH = portrait ? W * 0.20 : (landscape ? H * 0.17 : W * 0.15);
+    var topSpace = (portrait && wall.clock) ? H * 0.235 : pad * 0.9;
+    var lineH = W * (portrait ? 0.046 : 0.030);
+
+    var legendH = 0, legendRows = 0, legendCols = 1;
+    if (showList && !landscape) {
+      legendCols = list.length > 5 ? 2 : 1;
+      legendRows = Math.ceil(list.length / legendCols);
+      legendH = legendRows * lineH + W * 0.05;
+    }
+
+    var areaW = W - pad * 2 - (panelW ? panelW + pad * 0.8 : 0);
+    var areaTop = topSpace + titleH;
+    var availH = H - areaTop - legendH - pad * (landscape ? 0.9 : 1);
+
+    /* セル寸法：縦は高さから、横は「正方形に近づける」方向で詰める */
+    var cellW = areaW / 7;
+    var headH = cellW * 0.44;
+    var cellH = (availH - headH) / rows;
+    var maxRatio = portrait ? 1.34 : (landscape ? 1.05 : 1.15);
+    if (cellH > cellW * maxRatio) cellH = cellW * maxRatio;
+    var minRatio = portrait ? 0.9 : 0.78;
+    if (cellH < cellW * minRatio) {
+      cellW = cellH / minRatio;
+      headH = cellW * 0.44;
+      cellH = Math.min(cellH, (availH - headH) / rows);
+    }
+    var gridW = cellW * 7;
+    var gridH = headH + cellH * rows;
+    var gridLeft = panelW ? pad + (areaW - gridW) / 2 : (W - gridW) / 2;
+    var gridTop = areaTop + Math.max(0, (availH - gridH) * (portrait ? 0.32 : 0.45));
+
+    /* ---- タイトル ---- */
+    var Fbig = titleH * 0.60, Fyear = titleH * 0.155, Fen = titleH * 0.235;
+    var baseY = topSpace + titleH * 0.94;
+    ctx.textBaseline = "alphabetic";
+    ctx.font = fd(Fbig * 1.15, 600); var wBig = ctx.measureText(String(m)).width;
+    ctx.font = fd(Fen * 1.2, 600, true); var wEn = ctx.measureText(MONTH_EN[m - 1]).width;
+    var gap = titleH * 0.12;
+    var tx = landscape ? gridLeft : (W - (wBig + gap + wEn)) / 2;
+    ctx.textAlign = "left";
+    ctx.font = f(Fyear, 500); ctx.fillStyle = T.dim;
+    ctx.fillText(String(y), tx + titleH * 0.03, topSpace + titleH * 0.28);
+    ctx.font = fd(Fbig * 1.15, 600); ctx.fillStyle = T.accent || T.text;
+    ctx.fillText(String(m), tx, baseY);
+    ctx.font = fd(Fen * 1.2, 600, true); ctx.fillStyle = T.dim;
+    ctx.fillText(MONTH_EN[m - 1], tx + wBig + gap, baseY);
+
+    /* ---- 曜日ヘッダ ---- */
+    var LB = ["日", "月", "火", "水", "木", "金", "土"];
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.font = f(Math.min(cellW * 0.24, cellH * 0.30), 700);
+    for (var i = 0; i < 7; i++) {
+      var wd = (wall.start + i) % 7;
+      ctx.fillStyle = wd === 0 ? T.sun : (wd === 6 ? T.sat : T.dim);
+      ctx.fillText(LB[wd], gridLeft + cellW * (i + 0.5), gridTop + headH * 0.55);
+    }
+    ctx.strokeStyle = T.line; ctx.lineWidth = Math.max(1, W * 0.0016);
+    ctx.beginPath(); ctx.moveTo(gridLeft, gridTop + headH);
+    ctx.lineTo(gridLeft + gridW, gridTop + headH); ctx.stroke();
+
+    /* ---- 日付セル ---- */
+    var byDay = {};
+    list.forEach(function (c) { (byDay[c.day] = byDay[c.day] || []).push(c); });
+    var prevDim = new Date(y, m - 1, 0).getDate();
+    var cellsTop = gridTop + headH;
+    var compact = cellH < cellW * 0.62;
+
+    for (var r = 0; r < rows; r++) {
+      for (var c2 = 0; c2 < 7; c2++) {
+        var idx = r * 7 + c2, dnum = idx - off + 1;
+        var cx = gridLeft + c2 * cellW, cy = cellsTop + r * cellH;
+        var wd2 = (wall.start + c2) % 7;
+        var inMonth = dnum >= 1 && dnum <= dim;
+        var label = inMonth ? dnum : (dnum < 1 ? prevDim + dnum : dnum - dim);
+        var chs = inMonth ? (byDay[dnum] || []) : [];
+
+        ctx.strokeStyle = T.line; ctx.lineWidth = Math.max(1, W * 0.0011);
+        ctx.strokeRect(cx, cy, cellW, cellH);
+        if (chs.length) {
+          ctx.fillStyle = hexA(chs[0].color || accent, wall.theme === "dark" ? .16 : .10);
+          ctx.fillRect(cx + 1, cy + 1, cellW - 2, cellH - 2);
+        }
+
+        ctx.textAlign = "left"; ctx.textBaseline = "top";
+        ctx.font = f(Math.min(cellW * 0.24, cellH * 0.34), chs.length ? 700 : 500);
+        ctx.fillStyle = !inMonth ? T.faint : (wd2 === 0 ? T.sun : (wd2 === 6 ? T.sat : T.text));
+        ctx.fillText(String(label), cx + cellW * 0.10, cy + cellH * 0.08);
+
+        if (!chs.length) continue;
+        if (compact) drawDots(ctx, chs, cx, cy, cellW, cellH, W);
+        else drawCell(ctx, chs, imgs, cx, cy, cellW, cellH, T, W, f);
+      }
+    }
+
+    /* ---- 誕生日リスト（縦・正方形は下、横長は右） ---- */
+    if (showList && !landscape) {
+      var ly = gridTop + gridH + W * 0.05;
+      var colW = gridW / legendCols;
+      ctx.textBaseline = "middle";
+      list.forEach(function (c, n) {
+        var col = Math.floor(n / legendRows), row = n % legendRows;
+        var lx = gridLeft + col * colW, yy = ly + row * lineH;
+        var dot = lineH * 0.26;
+        ctx.beginPath(); ctx.arc(lx + dot, yy, dot, 0, 6.284);
+        ctx.fillStyle = c.color || accent; ctx.fill();
+        ctx.textAlign = "left";
+        ctx.font = f(lineH * 0.52, 700); ctx.fillStyle = T.dim;
+        var ds = m + "/" + c.day;
+        ctx.fillText(ds, lx + dot * 2.9, yy);
+        var dw = ctx.measureText(ds).width;
+        ctx.font = f(lineH * 0.56, 600); ctx.fillStyle = T.text;
+        ctx.fillText(fitText(ctx, c.name || "", colW - (dot * 3.4 + dw) - W * 0.03),
+                     lx + dot * 2.9 + dw + W * 0.018, yy);
+      });
+    } else if (showList && landscape) {
+      var px = W - pad - panelW, pTop = gridTop, pH = gridH;
+      var rowH = Math.min(pH / Math.max(list.length, 1), H * 0.17);
+      var av = rowH * 0.74;
+      list.forEach(function (c, n) {
+        var yy = pTop + rowH * (n + 0.5);
+        var ax = px + av / 2;
+        var im = imgs[c.id];
+        ctx.save();
+        ctx.beginPath(); ctx.arc(ax, yy, av / 2, 0, 6.284); ctx.clip();
+        if (im && im.width) {
+          var s = Math.max(av / im.width, av / im.height);
+          ctx.drawImage(im, ax - im.width * s / 2, yy - im.height * s / 2 - im.height * s * 0.06,
+                        im.width * s, im.height * s);
+        } else {
+          ctx.fillStyle = hexA(c.color || "#999", .22);
+          ctx.fillRect(ax - av, yy - av, av * 2, av * 2);
+          ctx.fillStyle = c.color || T.text; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+          ctx.font = f(av * 0.5, 700); ctx.fillText((c.name || "?").slice(0, 1), ax, yy);
+        }
+        ctx.restore();
+        ctx.beginPath(); ctx.arc(ax, yy, av / 2, 0, 6.284);
+        ctx.strokeStyle = c.color || "#999"; ctx.lineWidth = Math.max(1.2, W * 0.003); ctx.stroke();
+
+        var tx2 = px + av * 1.32, tw = panelW - av * 1.32;
+        ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
+        ctx.font = f(rowH * 0.26, 700); ctx.fillStyle = c.color || T.dim;
+        ctx.fillText(m + "月" + c.day + "日", tx2, yy - rowH * 0.04);
+        ctx.font = f(rowH * 0.32, 700); ctx.fillStyle = T.text;
+        ctx.fillText(fitText(ctx, c.name || "", tw), tx2, yy + rowH * 0.30);
+      });
+    }
+  }
+
+  /* セルが低いときは点だけ */
+  function drawDots(ctx, chs, cx, cy, cw, ch, W) {
+    var n = Math.min(chs.length, 4);
+    var d = Math.min(cw * 0.10, ch * 0.20);
+    var total = d * 2 * n + cw * 0.02 * (n - 1);
+    var sx = cx + cw - cw * 0.10 - total + d;
+    chs.slice(0, n).forEach(function (c, i) {
+      ctx.beginPath();
+      ctx.arc(sx + i * (d * 2 + cw * 0.02), cy + ch * 0.62, d, 0, 6.284);
+      ctx.fillStyle = c.color || "#999"; ctx.fill();
+    });
+  }
+
+  function drawCell(ctx, chs, imgs, cx, cy, cw, ch, T, W, f) {
+    var n = Math.min(chs.length, 3);
+    var showImg = wall.show !== "name";
+    var showName = wall.show !== "img";
+
+    if (!showImg) {
+      var fs = Math.min(cw * 0.19, ch * 0.20) / (n > 1 ? 1.25 : 1);
+      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      chs.slice(0, 3).forEach(function (c, i) {
+        ctx.font = f(fs, 700); ctx.fillStyle = c.color || T.text;
+        ctx.fillText(fitText(ctx, c.name || "", cw * 0.92),
+                     cx + cw / 2, cy + ch * (0.55 + (i - (n - 1) / 2) * 0.24));
+      });
+      return;
+    }
+
+    var av = Math.min(cw * (n === 1 ? 0.58 : n === 2 ? 0.42 : 0.32),
+                      ch * (showName ? 0.46 : 0.60));
+    var totalW = av * n + cw * 0.03 * (n - 1);
+    var startX = cx + (cw - totalW) / 2;
+    var acy = cy + ch * (showName ? 0.50 : 0.58);
+
+    chs.slice(0, n).forEach(function (c, i) {
+      var ax = startX + i * (av + cw * 0.03) + av / 2;
+      var im = imgs[c.id];
+      ctx.save();
+      ctx.beginPath(); ctx.arc(ax, acy, av / 2, 0, 6.284); ctx.closePath(); ctx.clip();
+      if (im && im.width) {
+        var s = Math.max(av / im.width, av / im.height);
+        var dw = im.width * s, dh = im.height * s;
+        ctx.drawImage(im, ax - dw / 2, acy - dh / 2 - dh * 0.06, dw, dh);
+      } else {
+        ctx.fillStyle = hexA(c.color || "#999", .22);
+        ctx.fillRect(ax - av, acy - av, av * 2, av * 2);
+        ctx.fillStyle = c.color || T.text;
+        ctx.textAlign = "center"; ctx.textBaseline = "middle";
+        ctx.font = f(av * 0.5, 700);
+        ctx.fillText((c.name || "?").slice(0, 1), ax, acy);
+      }
+      ctx.restore();
+      ctx.beginPath(); ctx.arc(ax, acy, av / 2, 0, 6.284);
+      ctx.strokeStyle = c.color || "#999"; ctx.lineWidth = Math.max(1.2, W * 0.0032);
+      ctx.stroke();
+    });
+
+    if (showName) {
+      ctx.textAlign = "center"; ctx.textBaseline = "top";
+      var ny = acy + av / 2 + ch * 0.05;
+      var fs2 = Math.min(cw * 0.155, ch * 0.14);
+      if (n === 1) {
+        ctx.font = f(fs2, 700); ctx.fillStyle = chs[0].color || T.text;
+        ctx.fillText(fitText(ctx, chs[0].name || "", cw * 0.94), cx + cw / 2, ny);
+      } else if (n === 2) {
+        ctx.font = f(fs2 * 0.8, 700);
+        chs.slice(0, 2).forEach(function (c, i) {
+          var ax2 = startX + i * (av + cw * 0.03) + av / 2;
+          ctx.fillStyle = c.color || T.text;
+          ctx.fillText(fitText(ctx, c.name || "", cw * 0.47), ax2, ny);
+        });
+      } else {
+        ctx.font = f(fs2 * 0.86, 700); ctx.fillStyle = T.dim;
+        ctx.fillText("＋" + chs.length + "人", cx + cw / 2, ny);
+      }
+    }
+  }
+
+  /* ---------- モーダル ---------- */
+  function fillDays() {
+    var m = parseInt($("f-month").value, 10) || 1;
+    var max = [31,29,31,30,31,30,31,31,30,31,30,31][m - 1];
+    var cur = parseInt($("f-day").value, 10) || 1;
+    var h = "";
+    for (var d = 1; d <= max; d++) h += '<option value="' + d + '">' + d + '日</option>';
+    $("f-day").innerHTML = h;
+    $("f-day").value = Math.min(cur, max);
+    $("f-sign").textContent = signOf(m, parseInt($("f-day").value, 10)) || "—";
+  }
+
+  function openModal(id) {
+    editingId = id || null;
+    var c = id ? chars.filter(function (x) { return x.id === id; })[0] : null;
+    $("modal-title").textContent = c ? "キャラクターを編集" : "キャラクターを追加";
+    $("btn-delete").hidden = !c;
+    $("f-name").value = c ? (c.name || "") : "";
+    $("f-reading").value = c ? (c.reading || "") : "";
+    $("f-month").value = c && c.month ? c.month : (new Date().getMonth() + 1);
+    fillDays();
+    $("f-day").value = c && c.day ? c.day : new Date().getDate();
+    $("f-sign").textContent = signOf(+$("f-month").value, +$("f-day").value);
+    $("f-age").value = c ? (c.age || "") : "";
+    $("f-statusi").value = c ? (c.status || "公開") : "公開";
+    $("f-media").value = c ? (c.media || []).join(", ") : "";
+    $("f-seriesi").value = c ? (c.series || "") : "";
+    $("f-color").value = c && c.color ? c.color : PALETTE[Math.floor(Math.random() * PALETTE.length)];
+    $("f-note").value = c ? (c.note || "") : "";
+    setImg(c ? c.img : null);
+    $("modal").hidden = false;
+    setTimeout(function () { $("f-name").focus(); }, 30);
+  }
+  function setImg(src) {
+    pendingImg = src || null;
+    $("drop-img").hidden = !src;
+    $("drop-ph").hidden = !!src;
+    if (src) $("drop-img").src = src;
+  }
+  function closeModal() { $("modal").hidden = true; editingId = null; pendingImg = null; }
+
+  function save() {
+    var name = $("f-name").value.trim();
+    if (!name) { toast("名前を入れてください"); $("f-name").focus(); return; }
+    var rec = {
+      id: editingId || uid(),
+      name: name,
+      reading: $("f-reading").value.trim(),
+      month: parseInt($("f-month").value, 10),
+      day: parseInt($("f-day").value, 10),
+      age: $("f-age").value.trim(),
+      media: $("f-media").value.split(/[,、]/).map(function (s) { return s.trim(); }).filter(Boolean),
+      series: $("f-seriesi").value.trim(),
+      color: $("f-color").value,
+      note: $("f-note").value.trim(),
+      status: $("f-statusi").value,
+      img: pendingImg
+    };
+    var i = -1;
+    chars.forEach(function (c, n) { if (c.id === rec.id) i = n; });
+    if (i >= 0) chars[i] = rec; else chars.push(rec);
+    closeModal(); render(); saveState();
+    toast(i >= 0 ? "更新しました" : name + " を追加しました");
+  }
+
+  function del() {
+    if (!editingId) return;
+    var c = chars.filter(function (x) { return x.id === editingId; })[0];
+    chars = chars.filter(function (x) { return x.id !== editingId; });
+    closeModal(); render(); saveState();
+    toast((c ? c.name : "") + " を削除しました");
+  }
+
+  /* ---------- 入出力 ---------- */
+  function download(name, blob) {
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  }
+  function stamp() {
+    var d = new Date(), p = function (n) { return ("0" + n).slice(-2); };
+    return d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate());
+  }
+  function exportJSON() {
+    download("characters_" + stamp() + ".json",
+      new Blob([JSON.stringify(chars, null, 2)], { type: "application/json" }));
+    toast("JSONを書き出しました");
+  }
+  function exportHTML() {
+    var doc = new DOMParser().parseFromString(PRISTINE, "text/html");
+    var payload = JSON.stringify(chars).replace(/</g, "\\u003c");
+    doc.getElementById("seed-data").textContent = payload;
+    download("誕生日手帖_" + stamp() + ".html",
+      new Blob(["<!DOCTYPE html>\n" + doc.documentElement.outerHTML], { type: "text/html;charset=utf-8" }));
+    toast("データ入りHTMLを保存しました");
+  }
+  function importJSON() {
+    var inp = document.createElement("input");
+    inp.type = "file"; inp.accept = ".json,application/json";
+    inp.onchange = function () {
+      var f = inp.files[0]; if (!f) return;
+      var fr = new FileReader();
+      fr.onload = function () {
+        try {
+          var data = JSON.parse(fr.result);
+          if (!Array.isArray(data)) throw 0;
+          data.forEach(function (d) { if (!d.id) d.id = uid(); });
+          chars = data; render(); saveState(); toast(data.length + "人を読み込みました");
+        } catch (e) { toast("読み込めませんでした"); }
+      };
+      fr.readAsText(f);
+    };
+    inp.click();
+  }
+  function loadDemo() {
+    chars = [
+      { id: uid(), name: "宵風 灯", reading: "よいかぜ あかり", month: 3, day: 14, age: "17",
+        media: ["pixiv", "X"], series: "センチネルバース", color: "#c8514c",
+        note: "3(み)14(いし) の語呂合わせ。守り石のモチーフから。", status: "公開", img: null },
+      { id: uid(), name: "白瀬 詞", reading: "しらせ ことば", month: 11, day: 2, age: "24",
+        media: ["小説", "pixiv"], series: "センチネルバース", color: "#3d6fa8",
+        note: "初稿を書き上げた日をそのまま誕生日に。", status: "公開", img: null },
+      { id: uid(), name: "ノクス", reading: "のくす", month: 12, day: 24, age: "外見20",
+        media: ["X"], series: "", color: "#5f5bb0",
+        note: "冬至まわりの静かな夜のイメージ。設定はまだ固まっていない。", status: "仮設定", img: null }
+    ];
+    render(); saveState(); toast("サンプルを読み込みました（自由に消してOK）");
+  }
+
+  /* ---------- toast ---------- */
+  /* ---------- 保存（IndexedDB、だめならlocalStorage） ---------- */
+  var DB_NAME = "ephemeride", DB_VER = 1, STORE = "state", dbp = null;
+  function idb() {
+    if (dbp) return dbp;
+    dbp = new Promise(function (res, rej) {
+      if (!window.indexedDB) return rej(new Error("no idb"));
+      var rq = indexedDB.open(DB_NAME, DB_VER);
+      rq.onupgradeneeded = function () {
+        if (!rq.result.objectStoreNames.contains(STORE)) rq.result.createObjectStore(STORE);
+      };
+      rq.onsuccess = function () { res(rq.result); };
+      rq.onerror = function () { rej(rq.error); };
+    });
+    return dbp;
+  }
+  var saveTimer;
+  function saveState() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(function () {
+      var payload = {
+        chars: chars, wall: wall, view: view,
+        theme: document.documentElement.dataset.theme, savedAt: new Date().toISOString()
+      };
+      idb().then(function (db) {
+        var tx = db.transaction(STORE, "readwrite");
+        tx.objectStore(STORE).put(payload, "state");
+        tx.oncomplete = flashSaved;
+        tx.onerror = fallbackSave;
+      }).catch(function () { fallbackSave(); });
+      function fallbackSave() {
+        try { localStorage.setItem(DB_NAME, JSON.stringify(payload)); flashSaved(); }
+        catch (e) { markSave("保存できません", true); }
+      }
+    }, 180);
+  }
+  function loadState(cb) {
+    idb().then(function (db) {
+      var rq = db.transaction(STORE, "readonly").objectStore(STORE).get("state");
+      rq.onsuccess = function () { cb(rq.result || fallbackLoad()); };
+      rq.onerror = function () { cb(fallbackLoad()); };
+    }).catch(function () { cb(fallbackLoad()); });
+    function fallbackLoad() {
+      try { return JSON.parse(localStorage.getItem(DB_NAME) || "null"); } catch (e) { return null; }
+    }
+  }
+  var saveMarkTimer;
+  function markSave(txt, warn) {
+    var el = $("savemark"); if (!el) return;
+    el.textContent = txt; el.classList.toggle("on", !warn);
+    el.style.color = warn ? "var(--danger)" : "";
+  }
+  function flashSaved() {
+    markSave("保存しました");
+    clearTimeout(saveMarkTimer);
+    saveMarkTimer = setTimeout(function () {
+      var el = $("savemark"); if (!el) return;
+      el.textContent = "自動保存"; el.classList.remove("on");
+    }, 1800);
+  }
+
+  var toastTimer;
+  function toast(msg) {
+    var el = $("toast");
+    el.textContent = msg; el.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove("show"); }, 2200);
+  }
+
+  /* ---------- 初期化 ---------- */
+  var mh = "";
+  for (var m = 1; m <= 12; m++) mh += '<option value="' + m + '">' + m + '月</option>';
+  $("f-month").innerHTML = mh;
+  fillDays();
+  $("swatches").innerHTML = PALETTE.map(function (c) { return '<i style="background:' + c + '" data-c="' + c + '"></i>'; }).join("");
+  $("swatches").querySelectorAll("i").forEach(function (n) {
+    n.onclick = function () { $("f-color").value = n.dataset.c; };
+  });
+
+  $("btn-add").onclick = function () { openModal(null); };
+  $("btn-cancel").onclick = closeModal;
+  $("btn-save").onclick = save;
+  $("btn-delete").onclick = del;
+  $("btn-export").onclick = exportJSON;
+  $("btn-import").onclick = importJSON;
+  $("btn-savehtml").onclick = exportHTML;
+  $("btn-theme").onclick = function () {
+    var d = document.documentElement;
+    d.dataset.theme = d.dataset.theme === "dark" ? "light" : "dark";
+    var mt = document.querySelector('meta[name="theme-color"]');
+    if (mt) mt.setAttribute("content", d.dataset.theme === "dark" ? "#191317" : "#EDEDED");
+    saveState();
+  };
+  $("modal").onclick = function (e) { if (e.target === $("modal")) closeModal(); };
+  $("lightbox").onclick = function () { $("lightbox").hidden = true; };
+  $("f-month").onchange = fillDays;
+  $("f-day").onchange = function () { $("f-sign").textContent = signOf(+$("f-month").value, +$("f-day").value); };
+  ["q", "f-series", "f-status", "sort"].forEach(function (id) {
+    $(id).oninput = render; $(id).onchange = render;
+  });
+  $("viewseg").querySelectorAll("button").forEach(function (b) {
+    b.onclick = function () {
+      $("viewseg").querySelectorAll("button").forEach(function (x) { x.classList.remove("on"); });
+      b.classList.add("on"); view = b.dataset.view; render(); saveState();
+    };
+  });
+
+  /* 画像ドロップ */
+  var drop = $("drop");
+  drop.onclick = function () { $("file").click(); };
+  $("file").onchange = function () { readImage($("file").files[0], setImg); $("file").value = ""; };
+  $("btn-img-clear").onclick = function (e) { e.stopPropagation(); setImg(null); };
+  ["dragenter", "dragover"].forEach(function (ev) {
+    drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add("over"); });
+  });
+  ["dragleave", "drop"].forEach(function (ev) {
+    drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.remove("over"); });
+  });
+  drop.addEventListener("drop", function (e) {
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) readImage(e.dataTransfer.files[0], setImg);
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") { closeModal(); $("lightbox").hidden = true; }
+    if (e.key === "Enter" && (e.metaKey || e.ctrlKey) && !$("modal").hidden) save();
+    if (e.key === "n" && !e.metaKey && !e.ctrlKey && $("modal").hidden &&
+        document.activeElement.tagName !== "INPUT" && document.activeElement.tagName !== "TEXTAREA") {
+      e.preventDefault(); openModal(null);
+    }
+  });
+
+  if ("serviceWorker" in navigator && location.protocol.indexOf("http") === 0) {
+    navigator.serviceWorker.register("sw.js").catch(function () {});
+  }
+
+  render();
+
+  loadState(function (st) {
+    if (!st) { if (chars.length) saveState(); return; }
+    if (st.theme) {
+      document.documentElement.dataset.theme = st.theme;
+      var mt = document.querySelector('meta[name="theme-color"]');
+      if (mt) mt.setAttribute("content", st.theme === "dark" ? "#191317" : "#EDEDED");
+    }
+    if (st.wall) for (var k in st.wall) if (k in wall) wall[k] = st.wall[k];
+    if (Array.isArray(st.chars) && st.chars.length) {
+      chars = st.chars;
+    } else if (chars.length) {
+      saveState();
+    }
+    if (st.view && ["card","month","table","wall"].indexOf(st.view) >= 0) {
+      view = st.view;
+      var segs = $("viewseg").querySelectorAll("button");
+      Array.prototype.forEach.call(segs, function (x) { x.classList.toggle("on", x.dataset.view === view); });
+    }
+    render();
+  });
+})();
+</script>
+</body>
+</html>
