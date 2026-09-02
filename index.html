@@ -376,6 +376,10 @@
   label.f { display: grid; gap: 4px; font-size: 11px; color: var(--text-dim); letter-spacing: .06em; font-weight: 600; }
   label.f input, label.f select, label.f textarea { width: 100%; }
   textarea { resize: vertical; min-height: 54px; font-size: 13px; }
+  .imgnote {
+    font-size: 10.5px; line-height: 1.65; color: var(--text-faint);
+    margin: 9px 0 0; padding-top: 9px; border-top: 1px solid var(--border);
+  }
   .colorline { display: flex; gap: 8px; align-items: center; }
   input[type="color"] {
     width: 38px; height: 33px; padding: 2px; border-radius: 8px;
@@ -513,7 +517,8 @@
 
   <footer class="tips">
     <b>使い方メモ</b>　入力した内容はこの端末のブラウザに<b>自動保存</b>されます（サーバーには何も送信されません）。<br>
-    バックアップや別の端末へ移したいときは「<b>JSON書き出し</b>」でファイルに保存し、移動先で「<b>読み込み</b>」してください。
+    バックアップや別の端末へ移したいときは「<b>JSON書き出し</b>」でファイルに保存し、移動先で「<b>読み込み</b>」してください。<br>
+    <b>イラストについて</b>　画像の登録は任意です。他の方が制作したイラストを、制作者に無断で保存・登録することはお控えください。
   </footer>
 </div>
 
@@ -530,6 +535,7 @@
         <div style="display:flex;gap:6px;margin-top:8px">
           <button class="ghost" id="btn-img-clear" style="flex:1;font-size:11.5px">画像を外す</button>
         </div>
+        <p class="imgnote">画像の登録は任意です。他の方が制作したイラストを、無断で保存して登録することはお控えください。</p>
         <input type="file" id="file" accept="image/*" hidden>
       </div>
 
