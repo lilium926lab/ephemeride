@@ -322,6 +322,22 @@
   .wall-meta { font-size: 11px; color: var(--text-faint); text-align: center; margin-top: 10px; }
   .customwh { display: none; gap: 8px; }
   .customwh.on { display: grid; grid-template-columns: 1fr 1fr; }
+  .custcol { display: none; gap: 10px; }
+  .custcol.on { display: grid; }
+  .cc-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .cc-row input[type="color"] { width: 100%; height: 30px; }
+  .cc-row label.f { font-size: 10px; }
+  .presets { display: flex; gap: 6px; flex-wrap: wrap; }
+  .presets button {
+    width: 34px; height: 26px; padding: 0; border-radius: 7px; position: relative;
+    overflow: hidden; border: 1px solid var(--border-strong); cursor: pointer;
+  }
+  .presets button:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .presets i { position: absolute; display: block; }
+  .presets .p-bar { left: 6px; right: 6px; top: 8px; height: 2px; border-radius: 2px; }
+  .presets .p-dot { left: 6px; bottom: 6px; width: 8px; height: 8px; border-radius: 50%; }
+  .cc-warn { font-size: 10.5px; color: var(--danger); line-height: 1.5; }
+  .cc-warn:empty { display: none; }
 
   /* ---------- empty state ---------- */
   .empty-state {
@@ -419,7 +435,6 @@
     header.top .spacer { display: none; }
     .acts { width: 100%; }
     .acts button { flex: 1; font-size: 12px; padding: 8px 6px; }
-    .acts #btn-savehtml { display: none; }
     .grid { grid-template-columns: repeat(auto-fill, minmax(46%, 1fr)); gap: 12px; }
     .hero { padding: 16px 16px 18px; }
     .hero-item { min-width: 0; flex: 1 1 100%; padding: 8px 12px 8px 8px; }
@@ -463,7 +478,6 @@
       <button class="icon ghost" id="btn-theme" title="表示テーマ切替">◐</button>
       <button id="btn-import">読み込み</button>
       <button id="btn-export">JSON書き出し</button>
-      <button id="btn-savehtml" title="データを埋め込んだHTMLを書き出します">HTMLで複製</button>
       <button class="primary" id="btn-add">＋ キャラを追加</button>
     </div>
   </header>
@@ -499,8 +513,7 @@
 
   <footer class="tips">
     <b>使い方メモ</b>　入力した内容はこの端末のブラウザに<b>自動保存</b>されます（サーバーには何も送信されません）。<br>
-    バックアップや別の端末へ移したいときは「<b>JSON書き出し</b>」でファイルに保存し、移動先で「<b>読み込み</b>」してください。<br>
-    「<b>HTMLで複製</b>」は、データを埋め込んだHTMLを1ファイルとして書き出します。保管用や配布用にどうぞ。
+    バックアップや別の端末へ移したいときは「<b>JSON書き出し</b>」でファイルに保存し、移動先で「<b>読み込み</b>」してください。
   </footer>
 </div>
 
@@ -586,13 +599,9 @@
 <div class="lightbox" id="lightbox" hidden><img id="lightbox-img" alt=""></div>
 <div class="toast" id="toast"></div>
 
-<script id="seed-data" type="application/json">[]</script>
 <script>
 (function () {
   "use strict";
-
-  /* 素のHTMLを退避（データ埋め込み保存に使う）——描画前に取得する */
-  var PRISTINE = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
 
   /* ---------- 定数 ---------- */
   var SIGNS = [
@@ -610,8 +619,6 @@
 
   /* ---------- 状態 ---------- */
   var chars = [];
-  try { chars = JSON.parse(document.getElementById("seed-data").textContent) || []; }
-  catch (e) { chars = []; }
   var view = "card", editingId = null, pendingImg = null;
 
   var $ = function (id) { return document.getElementById(id); };
@@ -850,17 +857,69 @@
     custom:    [1080, 1920, "カスタム"]
   };
   var THEMES = {
-    light: { bg:"#EDEDED", bg2:"#FBFAF9", line:"#DCD5D3", text:"#4B3C39", dim:"#7C6C67",
-             faint:"#C9C0BC", head:"#F1EDEC", sat:"#5B7A9E", sun:"#B0433F", accent:"#922951" },
-    dark:  { bg:"#191317", bg2:"#221b20", line:"#3a3038", text:"#ece4e6", dim:"#a99aa1",
-             faint:"#5c525a", head:"#2a2229", sat:"#8fb0d2", sun:"#e2766c", accent:"#d2789a" },
-    paper: { bg:"#EFE8DA", bg2:"#F9F4E9", line:"#D8CEB9", text:"#4A3D33", dim:"#93856F",
-             faint:"#C3B69C", head:"#E7DEC9", sat:"#54759A", sun:"#A9503F", accent:"#8A4A2F" }
+    light: { bg:"#EDEDED", line:"#DCD5D3", text:"#4B3C39", dim:"#7C6C67",
+             faint:"#C9C0BC", sat:"#5B7A9E", sun:"#B0433F", accent:"#922951", dark:false },
+    dark:  { bg:"#191317", line:"#3a3038", text:"#ece4e6", dim:"#a99aa1",
+             faint:"#5c525a", sat:"#8fb0d2", sun:"#e2766c", accent:"#d2789a", dark:true },
+    paper: { bg:"#EFE8DA", line:"#D8CEB9", text:"#4A3D33", dim:"#93856F",
+             faint:"#C3B69C", sat:"#54759A", sun:"#A9503F", accent:"#8A4A2F", dark:false }
   };
+  var CPRESETS = [
+    { n:"象牙にワイン", bg:"#EDEDED", text:"#4B3C39", accent:"#922951" },
+    { n:"生成りに琥珀", bg:"#F4F0E6", text:"#4A4034", accent:"#A2643C" },
+    { n:"桜",           bg:"#FBF0F2", text:"#4B3540", accent:"#C2568C" },
+    { n:"藍",           bg:"#16243A", text:"#E6EAF2", accent:"#7FA8D8" },
+    { n:"墨に金",       bg:"#1B1B1B", text:"#EDEDED", accent:"#C9A86A" },
+    { n:"深緑",         bg:"#17251E", text:"#E4EDE6", accent:"#8FBF9A" }
+  ];
+
+  /* 色ユーティリティ */
+  function rgbOf(h) {
+    h = String(h || "#000").replace("#", "");
+    if (h.length === 3) h = h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+    var n = parseInt(h, 16);
+    return [(n>>16)&255, (n>>8)&255, n&255];
+  }
+  function hexOf(r) {
+    return "#" + r.map(function (v) {
+      return ("0" + Math.max(0, Math.min(255, Math.round(v))).toString(16)).slice(-2);
+    }).join("");
+  }
+  function mix(a, b, t) {
+    var A = rgbOf(a), B = rgbOf(b);
+    return hexOf(A.map(function (v, i) { return v + (B[i] - v) * t; }));
+  }
+  function lum(h) {
+    var c = rgbOf(h).map(function (v) {
+      v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126*c[0] + 0.7152*c[1] + 0.0722*c[2];
+  }
+  function contrast(a, b) {
+    var l1 = lum(a), l2 = lum(b);
+    if (l1 < l2) { var t = l1; l1 = l2; l2 = t; }
+    return (l1 + 0.05) / (l2 + 0.05);
+  }
+  function themeOf() {
+    if (wall.theme !== "custom") return THEMES[wall.theme] || THEMES.light;
+    var c = wall.cust, isDark = lum(c.bg) < 0.35;
+    return {
+      bg: c.bg,
+      text: c.text,
+      dim:   mix(c.text, c.bg, 0.40),
+      faint: mix(c.text, c.bg, 0.70),
+      line:  mix(c.text, c.bg, 0.80),
+      sat: c.jp ? (isDark ? "#8fb0d2" : "#5B7A9E") : mix(c.accent, c.text, 0.42),
+      sun: c.jp ? (isDark ? "#e2766c" : "#B0433F") : c.accent,
+      accent: c.accent,
+      dark: isDark
+    };
+  }
   var wall = {
     y: new Date().getFullYear(), m: new Date().getMonth() + 1,
     preset: "iphone", cw: 1179, ch: 2556, theme: "light",
-    start: 1, show: "both", clock: true, legend: true, tint: true
+    start: 1, show: "both", clock: true, legend: true, tint: true,
+    cust: { bg: "#EDEDED", text: "#4B3C39", accent: "#922951", jp: true }
   };
   var imgCache = {};
 
@@ -916,7 +975,18 @@
         '</div>' +
         '<label class="f">配色<select id="w-theme">' +
           '<option value="light">ライト</option><option value="dark">ダーク</option>' +
-          '<option value="paper">クラフト紙</option></select></label>' +
+          '<option value="paper">クラフト紙</option>' +
+          '<option value="custom">カスタム（自分で選ぶ）</option></select></label>' +
+        '<div class="custcol" id="w-custcol">' +
+          '<div class="cc-row">' +
+            '<label class="f">背景<input type="color" id="w-c-bg"></label>' +
+            '<label class="f">文字<input type="color" id="w-c-text"></label>' +
+            '<label class="f">アクセント<input type="color" id="w-c-acc"></label>' +
+          '</div>' +
+          '<div class="presets" id="w-presets"></div>' +
+          '<label class="chk"><input type="checkbox" id="w-c-jp">土曜を青・日曜を赤にする</label>' +
+          '<div class="cc-warn" id="w-c-warn"></div>' +
+        '</div>' +
         '<label class="f">キャラの見せ方<select id="w-show">' +
           '<option value="both">イラスト＋名前</option><option value="img">イラストのみ</option>' +
           '<option value="name">名前のみ</option></select></label>' +
@@ -927,7 +997,6 @@
         '<label class="chk"><input type="checkbox" id="w-tint">キャラの色を背景に薄く反映</label>' +
         '<div class="dl">' +
           '<button class="primary" id="w-dl">PNGでダウンロード</button>' +
-          '<button id="w-copy">画像をコピー（SNS貼り付け用）</button>' +
         '</div>' +
       '</div>' +
       '<div><div class="wall-preview"><canvas id="wcanvas"></canvas></div>' +
@@ -940,6 +1009,34 @@
     $("w-clock").checked = wall.clock; $("w-legend").checked = wall.legend;
     $("w-tint").checked = wall.tint;
     $("w-custom").classList.toggle("on", wall.preset === "custom");
+    $("w-c-bg").value = wall.cust.bg;
+    $("w-c-text").value = wall.cust.text;
+    $("w-c-acc").value = wall.cust.accent;
+    $("w-c-jp").checked = wall.cust.jp;
+    $("w-custcol").classList.toggle("on", wall.theme === "custom");
+    $("w-presets").innerHTML = CPRESETS.map(function (c, i) {
+      return '<button data-i="' + i + '" title="' + esc(c.n) + '" style="background:' + c.bg + '">' +
+             '<i class="p-bar" style="background:' + c.text + '"></i>' +
+             '<i class="p-dot" style="background:' + c.accent + '"></i></button>';
+    }).join("");
+    $("w-presets").querySelectorAll("button").forEach(function (btn) {
+      btn.onclick = function () {
+        var c = CPRESETS[+btn.dataset.i];
+        wall.cust.bg = c.bg; wall.cust.text = c.text; wall.cust.accent = c.accent;
+        $("w-c-bg").value = c.bg; $("w-c-text").value = c.text; $("w-c-acc").value = c.accent;
+        checkContrast(); drawWall(); saveState();
+      };
+    });
+    function onCust() {
+      wall.cust.bg = $("w-c-bg").value;
+      wall.cust.text = $("w-c-text").value;
+      wall.cust.accent = $("w-c-acc").value;
+      wall.cust.jp = $("w-c-jp").checked;
+      checkContrast(); drawWall(); saveState();
+    }
+    ["w-c-bg", "w-c-text", "w-c-acc"].forEach(function (id) { $(id).oninput = onCust; });
+    $("w-c-jp").onchange = onCust;
+    checkContrast();
 
     function shift(d) {
       var t = wall.m + d;
@@ -959,7 +1056,11 @@
     };
     $("w-cw").oninput = function () { wall.cw = Math.max(200, Math.min(6000, +this.value || 1080)); drawWall(); };
     $("w-ch").oninput = function () { wall.ch = Math.max(200, Math.min(6000, +this.value || 1920)); drawWall(); };
-    $("w-theme").onchange = function () { wall.theme = this.value; drawWall(); };
+    $("w-theme").onchange = function () {
+      wall.theme = this.value;
+      $("w-custcol").classList.toggle("on", wall.theme === "custom");
+      drawWall(); saveState();
+    };
     $("w-show").onchange = function () { wall.show = this.value; drawWall(); };
     $("w-start").onchange = function () { wall.start = +this.value; drawWall(); };
     $("w-clock").onchange = function () { wall.clock = this.checked; drawWall(); };
@@ -972,16 +1073,16 @@
         toast("画像を保存しました");
       }, "image/png");
     };
-    $("w-copy").onclick = function () {
-      var cv = $("wcanvas");
-      cv.toBlob(function (b) {
-        if (!navigator.clipboard || !window.ClipboardItem) { toast("このブラウザではコピー未対応です"); return; }
-        navigator.clipboard.write([new ClipboardItem({ "image/png": b })])
-          .then(function () { toast("画像をコピーしました"); })
-          .catch(function () { toast("コピーできませんでした（ダウンロードをお使いください）"); });
-      }, "image/png");
-    };
     drawWall();
+  }
+
+  function checkContrast() {
+    var el = $("w-c-warn"); if (!el) return;
+    if (wall.theme !== "custom") { el.textContent = ""; return; }
+    var c = wall.cust, msg = [];
+    if (contrast(c.text, c.bg) < 3) msg.push("文字と背景の明度が近く、日付が読みにくくなります。");
+    if (contrast(c.accent, c.bg) < 2) msg.push("アクセントが背景に埋もれています。");
+    el.textContent = msg.join(" ");
   }
 
   function drawWall() {
@@ -997,7 +1098,7 @@
   }
 
   function paintWall(ctx, W, H, list, imgs) {
-    var T = THEMES[wall.theme] || THEMES.light;
+    var T = themeOf();
     var y = wall.y, m = wall.m;
     var FONT = '"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif';
     var DISP = '"Cormorant Garamond","Times New Roman",serif';
@@ -1011,13 +1112,13 @@
     ctx.fillStyle = T.bg; ctx.fillRect(0, 0, W, H);
     if (wall.tint && list.length) {
       var g = ctx.createLinearGradient(0, 0, W * .6, H);
-      g.addColorStop(0, hexA(accent, wall.theme === "dark" ? .22 : .16));
+      g.addColorStop(0, hexA(accent, T.dark ? .22 : .16));
       g.addColorStop(.55, hexA(accent, 0));
       ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
       var last = list[list.length - 1];
       if (last && last.color && list.length > 1) {
         var g2 = ctx.createLinearGradient(W, H, W * .35, H * .25);
-        g2.addColorStop(0, hexA(last.color, wall.theme === "dark" ? .2 : .14));
+        g2.addColorStop(0, hexA(last.color, T.dark ? .2 : .14));
         g2.addColorStop(1, hexA(last.color, 0));
         ctx.fillStyle = g2; ctx.fillRect(0, 0, W, H);
       }
@@ -1112,7 +1213,7 @@
         ctx.strokeStyle = T.line; ctx.lineWidth = Math.max(1, W * 0.0011);
         ctx.strokeRect(cx, cy, cellW, cellH);
         if (chs.length) {
-          ctx.fillStyle = hexA(chs[0].color || accent, wall.theme === "dark" ? .16 : .10);
+          ctx.fillStyle = hexA(chs[0].color || accent, T.dark ? .16 : .10);
           ctx.fillRect(cx + 1, cy + 1, cellW - 2, cellH - 2);
         }
 
@@ -1350,14 +1451,6 @@
       new Blob([JSON.stringify(chars, null, 2)], { type: "application/json" }));
     toast("JSONを書き出しました");
   }
-  function exportHTML() {
-    var doc = new DOMParser().parseFromString(PRISTINE, "text/html");
-    var payload = JSON.stringify(chars).replace(/</g, "\\u003c");
-    doc.getElementById("seed-data").textContent = payload;
-    download("誕生日手帖_" + stamp() + ".html",
-      new Blob(["<!DOCTYPE html>\n" + doc.documentElement.outerHTML], { type: "text/html;charset=utf-8" }));
-    toast("データ入りHTMLを保存しました");
-  }
   function importJSON() {
     var inp = document.createElement("input");
     inp.type = "file"; inp.accept = ".json,application/json";
@@ -1476,7 +1569,6 @@
   $("btn-delete").onclick = del;
   $("btn-export").onclick = exportJSON;
   $("btn-import").onclick = importJSON;
-  $("btn-savehtml").onclick = exportHTML;
   $("btn-theme").onclick = function () {
     var d = document.documentElement;
     d.dataset.theme = d.dataset.theme === "dark" ? "light" : "dark";
